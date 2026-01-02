@@ -1,0 +1,7 @@
+.datagrid-form
+  - options[:method] = :get
+  = form_for grid, options do |f|
+    - grid.filters.each do |filter|
+      .datagrid-filter.filter
+        = f.datagrid_label filter
+        = f.datagrid_filter filter

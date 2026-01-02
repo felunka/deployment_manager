@@ -1,0 +1,21 @@
+.card.mt-3
+  %h5.card-header.d-flex.justify-content-between.align-items-center
+    = NodeDeployment.model_name.human
+    .d-flex.model-buttons
+      - if @node_deployment.id.present?
+        = button_to t('helpers.submit.delete'), node_deployment_path(@node_deployment), class: 'btn btn-danger', method: :delete
+      = button_to t('helpers.submit.cancel'), node_deployments_path, class: 'btn btn-secondary', method: :get
+
+  .card-body
+    = simple_form_for @node_deployment do |f|
+      = f.association :node
+      = f.input :name
+      = f.input :path
+      = f.input :git_url, as: :url
+      = f.input :deployment_type, collection: NodeDeployment.deployment_types.symbolize_keys.keys, include_blank: false, include_hidden: false
+      = f.input :compose, as: :text, input_html: { value: "" }
+      - unless @node_deployment.id.present?
+        = f.input :github_token, input_html: { value: "" }
+        = f.input :adopt, as: :boolean, input_html: { checked: false }
+        
+      = f.submit class: 'btn btn-primary mt-2'

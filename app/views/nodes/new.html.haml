@@ -1,0 +1,8 @@
+.card.mt-3
+  .card-body
+    = t 'views.nodes.install_hint'
+    %pre.mt-2
+      %code{data: {controller: 'replace-url'}}
+        = "curl -fsSL $$BASE_URL$$/install.sh | sudo bash -s -- \"$$BASE_URL$$\" BASE_DOMAIN_OF_SERVER \"#{current_user.email}\""
+
+= render partial: 'form'

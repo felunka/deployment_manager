@@ -1,0 +1,9 @@
+.card.mt-3
+  %h5.card-header.d-flex.justify-content-between.align-items-center
+    = "#{t('activerecord.models.container')} (#{params[:id]})"
+    .d-flex.model-buttons
+      = button_to t('helpers.navigate.back'), node_path(@node), class: 'btn btn-primary', method: :get
+  .card-body
+    %pre.mt-2.vh-80
+      %code
+        = @container_detail

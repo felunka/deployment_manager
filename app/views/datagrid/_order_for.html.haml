@@ -1,0 +1,11 @@
+.order
+  - if grid.ordered_by?(column)
+    - if grid.descending
+      = link_to(datagrid_order_path(grid, column, false), class: 'asc') do
+        = icon 'sort-alpha-up'
+    - else
+      = link_to(datagrid_order_path(grid, column, true), class: 'desc') do
+        = icon 'sort-alpha-down'
+  - else
+    = link_to(datagrid_order_path(grid, column, false), class: 'asc text-black') do
+      = icon 'sort-alpha-up'

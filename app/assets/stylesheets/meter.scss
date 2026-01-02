@@ -1,0 +1,39 @@
+.meter {
+  --value: 0;               /* 0–100 */
+  --gap: 30deg;              /* bottom gap */
+  --usable: calc(360deg - var(--gap));
+  --angle: calc(var(--usable) * var(--value) / 100);
+
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+
+  --color: var(--bs-green);
+
+  background:
+    conic-gradient(
+      from 195deg,            /* start bottom-left */
+      var(--color) 0deg var(--angle),
+      #e0e0e0 var(--angle) var(--usable),
+      transparent var(--usable) 360deg
+    );
+
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+.meter::after {
+  content: "";
+  width: 120px;
+  height: 120px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.meter span {
+  position: relative;
+  font-weight: bold;
+  z-index: 10;
+}

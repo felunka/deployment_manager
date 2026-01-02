@@ -1,0 +1,36 @@
+- if @node.pending_init?
+  .card.mt-3
+    .card-body.d-flex.justify-content-center.flex-column.align-items-center
+      .spinner-border{role: "status"}
+        %span.visually-hidden Loading...
+      %span
+        = t('views.nodes.pending_init')
+
+- elsif @node.init_failed?
+  .card.mt-3
+    .card-body.d-flex.justify-content-center.flex-column.align-items-center
+      = icon 'exclamation-diamond'
+      %span
+        = t('views.nodes.init_failed')
+- elsif @node.connection_lost?
+  .card.mt-3.text-danger
+    .card-body.d-flex.justify-content-center.flex-column.align-items-center
+      = icon 'exclamation-diamond'
+      %span
+        = t('views.nodes.connection_lost')
+- else
+  = turbo_frame_tag 'node_health', src: health_node_path(@node) do
+    .card.mt-3
+      .card-body.d-flex.justify-content-center
+        .spinner-border{role: "status"}
+          %span.visually-hidden Loading...
+  = turbo_frame_tag 'containers', src: node_container_index_path(@node) do
+    .card.mt-3
+      .card-body.d-flex.justify-content-center
+        .spinner-border{role: "status"}
+          %span.visually-hidden Loading...
+  = turbo_frame_tag 'node_deployments', src: node_node_deployments_path(@node) do
+    .card.mt-3
+      .card-body.d-flex.justify-content-center
+        .spinner-border{role: "status"}
+          %span.visually-hidden Loading...

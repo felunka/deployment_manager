@@ -1,0 +1,9 @@
+.card.mt-3
+  %h5.card-header.d-flex.justify-content-between.align-items-center
+    = Node.model_name.human
+    .d-flex.model-buttons
+      = button_to t('helpers.submit.create', model: Node.model_name.human), new_node_path, class: 'btn btn-primary', method: :get
+  .table-responsive
+    = datagrid_form_with model: @nodes_grid, url: nodes_path
+    = datagrid_table @nodes_grid
+    = paginate @nodes_grid.assets

@@ -1,0 +1,34 @@
+en:
+  activerecord:
+    models:
+      user: User
+      node: Node
+      node_deployment: Deployment
+      container: Container
+    attributes:
+      user:
+        name: Name
+        email: E-mail
+        password: Password
+        github_pat: Github PAT
+      node:
+        hostname: Hostname
+        ip: IP
+        api_url: API Url
+        port: Port
+        node_status: Status
+      node_deployment:
+        node_id: Node
+        node: Node
+        name: Name
+        path: Path
+        deployment_type: Type
+        deployment_status: Status
+      container:
+        id: ID
+        name: Name
+        image: Image
+        command: Command
+        created: Created at
+        ports: Ports
+        state: State

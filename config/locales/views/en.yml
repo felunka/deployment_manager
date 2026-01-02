@@ -1,0 +1,14 @@
+en:
+  views:
+    nodes:
+      install_hint: "Run the following command on the target node and enter the generated key and server details:"
+      pending_init: "Node is still pending initialization..."
+      connection_lost: "Connection lost. Reload to retry"
+      init_failed: "Node adoption failed. Please check for errors in the node setup and try again. You have to delete and recreate the node to try again."
+  helpers:
+    submit:
+      confirm: "Are you sure you want to submit?"
+  messages:
+    model:
+      deleted: Record deleted
+      created: Record created

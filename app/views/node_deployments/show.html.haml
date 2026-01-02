@@ -1,0 +1,26 @@
+- if @node_deployment.pending_init?
+  .card.mt-3
+    .card-body.d-flex.justify-content-center.flex-column.align-items-center
+      .spinner-border{role: "status"}
+        %span.visually-hidden Loading...
+      %span
+        = t('views.node_deployment.pending_init')
+
+- elsif @node_deployment.init_failed?
+  .card.mt-3
+    .card-body.d-flex.justify-content-center.flex-column.align-items-center
+      = icon 'exclamation-diamond'
+      %span
+        = t('views.node_deployment.init_failed')
+- elsif @node_deployment.connection_lost?
+  .card.mt-3.text-danger
+    .card-body.d-flex.justify-content-center.flex-column.align-items-center
+      = icon 'exclamation-diamond'
+      %span
+        = t('views.node_deployment.connection_lost')
+- elsif @node_deployment.healthy?
+  = turbo_frame_tag 'deployment_status', src: status_node_deployment_path(@node_deployment) do
+    .card.mt-3
+      .card-body.d-flex.justify-content-center
+        .spinner-border{role: "status"}
+          %span.visually-hidden Loading...

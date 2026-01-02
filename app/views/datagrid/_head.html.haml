@@ -1,0 +1,12 @@
+%tr
+  - grid.html_columns(*options[:columns]).each do |column|
+    %th{class: "#{column}"}
+      .d-flex.justify-content-between
+        = grid.header_label(column)
+        .options.d-flex
+          = render partial: "datagrid/order_for", locals: {grid: grid, column: column} if column.supports_order? && options[:order]
+          - if filter = grid.filters.select{ |e| e.name == column.name }.first
+
+            .filter-button.float-end{data: { action: 'click->datagrid#filterOpen', grid_name: grid.model_name.i18n_key, column_name: column.name, label: grid.header_label(column), filter_type: filter.type, filter_options: filter.options}}
+              - active_class = grid.filter_value_as_string(filter).present? ? 'active-filter' : ''
+              = icon 'filter', [active_class]

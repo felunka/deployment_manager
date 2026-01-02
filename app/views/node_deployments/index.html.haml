@@ -1,0 +1,13 @@
+%turbo-frame#node_deployments
+  .card.mt-3
+    %h5.card-header.d-flex.justify-content-between.align-items-center
+      = NodeDeployment.model_name.human
+      .d-flex.model-buttons
+        - if @node.present?
+          = button_to t('helpers.submit.create', model: NodeDeployment.model_name.human), new_node_node_deployment_path(@node), class: 'btn btn-primary', method: :get, form: { "data-turbo-frame": "_top" }
+        - else
+          = button_to t('helpers.submit.create', model: NodeDeployment.model_name.human), new_node_deployment_path, class: 'btn btn-primary', method: :get, form: { "data-turbo-frame": "_top" }
+    .table-responsive
+      = datagrid_form_with model: @node_deployments_grid, url: nodes_path
+      = datagrid_table @node_deployments_grid
+      = paginate @node_deployments_grid.assets

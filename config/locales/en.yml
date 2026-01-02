@@ -28,4 +28,22 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  datagrid:
+    no_results:
+      "No entries found..."
+    table:
+      no_columns: "There are no columns to display"
+    form:
+      search: "Search"
+      reset: "Reset"
+    filters:
+      title: 'Filter'
+      xboolean:
+        "yes": "Yes"
+        "no": "No"
+      dynamic:
+        operations:
+          ">=": "≥"
+          "<=": "≤"
+          "=": "="
+          "=~": "≈"

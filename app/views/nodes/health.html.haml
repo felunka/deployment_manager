@@ -1,0 +1,39 @@
+%turbo-frame#node_health
+  - @health_data["memory_total"] = 16341328
+  .card.mt-3
+    .card-body
+      .row
+        .col
+          .d-flex.justify-content-center.flex-column.align-items-center
+            .meter{data: {controller: 'meter', value: @health_data["cpu_usage"]}}
+            .h5
+              CPU
+        .col
+          .d-flex.justify-content-center.flex-column.align-items-center
+            .meter{data: {controller: 'meter', value: (((@health_data["memory_total"].to_f - @health_data["memory_free"]) / @health_data["memory_total"]) * 100).to_i}}
+            .h5
+              Memory
+        .col-6
+          .row
+            .col-md-3.mt-3
+              .h5
+                = @health_data["memory_swapped"]
+              Memory swap
+            .col-md-3.mt-3
+              .h5
+                = @health_data["memory_buffer"]
+              Memory buffered
+            .col-md-3.mt-3
+              .h5
+                = @health_data["memory_cache"]
+              Memory cache
+            .col-md-3.mt-3
+              .h5
+                = @health_data["io_bytes_in"]
+              IO in
+            .col-md-3.mt-3
+              .h5
+                = @health_data["io_bytes_out"]
+              IO out
+        .col-1.d-flex.justify-content-end
+          = button_to t('helpers.refresh'), health_node_path(@node), class: 'btn btn-primary', method: :get

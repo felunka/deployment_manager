@@ -1,0 +1,80 @@
+.datagrid-form {
+  display: none;
+}
+
+.filter-header-actions {
+  column-gap: 5px;
+
+  i {
+    cursor: pointer;
+  }
+}
+
+%table-cell-style {
+  border-right: 1px solid var(--bs-gray-400);
+  padding-left: 0.4em;
+  padding-right: 0.4em;
+}
+
+table.datagrid {
+  width: 100%;
+
+  thead {
+    th:not(:last-child) {
+      @extend %table-cell-style;
+    }
+
+    i {
+      @extend .text-muted;
+    }
+    .filter-button{
+      cursor: pointer;
+
+      .active-filter {
+        @extend .text-primary;
+      }
+    }
+  }
+
+  tbody {
+    tr:nth-child(odd) {
+      background: var(--bs-gray-300);
+    }
+
+    td:not(:last-child) {
+      @extend %table-cell-style;
+    }
+  }
+
+  .order {
+    display: inline-block;
+
+    a {
+      color: unset;
+    }
+  }
+}
+
+.pagination {
+  width: 100%;
+  justify-content: center;
+  gap: 5px;
+  a {
+    @extend .btn;
+    @extend .btn-outline-primary;
+  }
+
+  .current {
+    @extend .btn;
+  }
+}
+
+.filter-select2-wrapper {
+  @extend .input-group;
+  width: 200px;
+  flex-wrap: nowrap;
+
+  .select2-selection {
+    height: 100%;
+  }
+}

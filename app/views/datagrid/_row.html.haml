@@ -1,0 +1,3 @@
+%tr
+  - grid.html_columns(*options[:columns]).each do |column|
+    %td{class: "#{column.name}"}= datagrid_value(grid, column, asset)

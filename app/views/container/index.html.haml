@@ -1,0 +1,9 @@
+%turbo-frame#containers
+  .card.mt-3
+    %h5.card-header.d-flex.justify-content-between.align-items-center
+      = t('activerecord.models.container')
+      .d-flex.model-buttons
+        = button_to t('helpers.refresh'), node_container_index_path(@node), class: 'btn btn-primary', method: :get
+    .table-responsive
+      - if @container_grid.present?
+        = datagrid_table @container_grid
