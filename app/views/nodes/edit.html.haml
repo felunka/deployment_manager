@@ -1,1 +1,8 @@
+.card.mt-3
+  .card-body
+    = t 'views.nodes.update_hint'
+    %pre.mt-2
+      %code{data: {controller: 'replace-url'}}
+        = "curl -fsSL $$BASE_URL$$/update.sh | sudo bash -s -- \"$$BASE_URL$$\""
+
 = render partial: 'form'

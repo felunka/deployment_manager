@@ -12,6 +12,7 @@ use crate::util;
 #[derive(Serialize)]
 struct SystemStats {
     memory_total: i32,
+    memory_available: i32,
     memory_swapped: i32,
     memory_free: i32,
     memory_buffer: i32,
@@ -28,9 +29,11 @@ pub fn health(_: Request<hyper::body::Incoming>) -> Result<Response<Full<Bytes>>
         .map(|line| line.split_whitespace().collect())
         .collect();
     let total_mem = util::command_output("awk", Some(vec!["/^MemTotal:/ {printf $2}", "/proc/meminfo"]), None);
+    let memory_available = util::command_output("awk", Some(vec!["/^MemAvailable:/ {printf $2}", "/proc/meminfo"]), None);
 
     let mut result = SystemStats {
         memory_total: total_mem.parse::<i32>().unwrap(),
+        memory_available: memory_available.parse::<i32>().unwrap(),
         memory_swapped: -1,
         memory_free: -1,
         memory_buffer: -1,

@@ -32,6 +32,7 @@ class NodesController < ApplicationController
       @node.update node_status: :connection_lost
       @health_data = JSON.parse('{
         "memory_total": -1,
+        "memory_available": -1,
         "memory_swapped": -1,
         "memory_free": -1,
         "memory_buffer": -1,
