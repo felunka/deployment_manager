@@ -7,4 +7,8 @@
     .card-body
       %pre.mt-2.vh-80
         %code{data: {controller: 'ansi-color'}}
-          = @status
+          - if @status.kind_of?(Array)
+            - @status.each do |line|
+              = line
+          - else
+            = @status

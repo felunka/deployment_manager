@@ -8,7 +8,7 @@ use bcrypt::{verify};
 
 use regex::Regex;
 
-use crate::services::{self, github_runners};
+use crate::services::{self, docker_compose, github_runners};
 
 
 pub async fn router(
@@ -53,9 +53,9 @@ pub async fn router(
     let containers_re = Regex::new(r"\/docker\/container\/(?P<id>[a-z0-9]{64})\/(?P<action>\w+)").unwrap();
 
     // Do routing
-    if path == "/health" {
+    if path == "/health" && request.method() == Method::GET {
         services::health::health(request)
-    } else if path == "/docker/containers/list" {
+    } else if path == "/docker/containers/list" && request.method() == Method::GET {
         services::docker::list_containers(request).await
     } else if let Some(caps) = containers_re.captures(path) {
         let id = &caps["id"];
@@ -68,11 +68,16 @@ pub async fn router(
             "logs" => services::docker::container_logs(id).await,
             _ => not_found()
         }
-    } else if path == "/runner/status" && params.contains_key("path") {
+    } else if path == "/runner/status" && params.contains_key("path") && request.method() == Method::GET {
         let svc_path = params.get("path").unwrap();
         github_runners::get_status(svc_path)
     } else if path == "/runner" && request.method() == Method::POST {
         github_runners::setup_new(request).await
+    } else if path == "/docker/compose" && request.method() == Method::POST {
+        docker_compose::create_or_update_compose(request).await
+    } else if path == "/docker/compose/status" && params.contains_key("path") && request.method() == Method::GET {
+        let compose_path = params.get("path").unwrap();
+        docker_compose::logs(compose_path).await
     } else {
         not_found()
     }

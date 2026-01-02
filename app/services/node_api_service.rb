@@ -9,11 +9,11 @@ class NodeApiService
     get("health")
   end
 
-  def create_runner(deployment, token)
+  def create_runner(node_deployment, token)
     body = {
       token: token,
-      path: deployment.path,
-      git_url: deployment.git_url
+      path: node_deployment.path,
+      git_url: node_deployment.git_url
     }
 
     post("runner", body)
@@ -26,6 +26,20 @@ class NodeApiService
 
   def container_detail(id, action)
     get("docker/container/#{id}/#{action}")
+  end
+
+  # Compose
+  def setup_compose(node_deployment)
+    body = {
+      path: node_deployment.path,
+      compose: node_deployment.compose
+    }
+
+    post("docker/compose", body)
+  end
+
+  def compose_logs(node_deployment)
+    get("docker/compose/status?path=#{CGI.escape(node_deployment.path)}")
   end
 
   # Runner

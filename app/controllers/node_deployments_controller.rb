@@ -24,7 +24,7 @@ class NodeDeploymentsController < ApplicationController
     if @node_deployment.simple_docker_run?
       # TODO: implement
     elsif @node_deployment.simple_docker_compose?
-      # TODO: implement
+      res = n_api.compose_logs(@node_deployment)
     elsif @node_deployment.github_action_runner?
       res = n_api.runner_status(@node_deployment)
     end
@@ -105,17 +105,17 @@ class NodeDeploymentsController < ApplicationController
         if node_deployment.simple_docker_run?
           # TODO: implement
         elsif node_deployment.simple_docker_compose?
-          # TODO: implement
+          response = node_api.setup_compose(node_deployment)
         elsif node_deployment.github_action_runner?
           response = node_api.setup_runner(node_deployment, permitted_params[:github_token])
-          if response && response.code == "200"
-            logger.info(response.body)
-            node_deployment.update deployment_status: :healthy
-          else
-            logger.warn("Deployment failed!")
-            logger.warn(response.body)
-            node_deployment.update deployment_status: :init_failed
-          end
+        end
+        if response && response.code == "200"
+          logger.info(response.body)
+          node_deployment.update deployment_status: :healthy
+        else
+          logger.warn("Deployment failed!")
+          logger.warn(response.body)
+          node_deployment.update deployment_status: :init_failed
         end
       else
         node_deployment.update deployment_status: :healthy
