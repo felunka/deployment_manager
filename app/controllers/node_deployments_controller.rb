@@ -92,6 +92,7 @@ class NodeDeploymentsController < ApplicationController
       :path,
       :git_url,
       :deployment_type,
+      :compose,
     )
   end
 

@@ -34,7 +34,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_28_132849) do
     t.string "ip", null: false
     t.string "key", null: false
     t.integer "node_status", default: 0, null: false
-    t.integer "port", default: 8080, null: false
+    t.integer "port", default: 443, null: false
     t.datetime "updated_at", null: false
   end
 
