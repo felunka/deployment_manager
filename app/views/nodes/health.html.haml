@@ -9,7 +9,7 @@
               CPU
         .col
           .d-flex.justify-content-center.flex-column.align-items-center
-            .meter{data: {controller: 'meter', value: ((@health_data["memory_available"].to_f / @health_data["memory_total"]) * 100).to_i}}
+            .meter{data: {controller: 'meter', value: ((1-(@health_data["memory_available"].to_f / @health_data["memory_total"])) * 100).to_i}}
             .h5
               Memory
         .col-6
