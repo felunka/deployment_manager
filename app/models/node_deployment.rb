@@ -16,5 +16,4 @@ class NodeDeployment < ApplicationRecord
 
   validates :name, presence: true
   validates :path, presence: true
-  validates :git_url, presence: true
 end
