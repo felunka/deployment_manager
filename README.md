@@ -34,7 +34,14 @@ RAILS_MASTER_KEY=CHOOSE POSTGRES_PASSWORD=CHOOSE DOMAIN=manager.example docker c
 ```
 OR
 
-Fork the repository and setup your self hosted runner. You can then use the GitHub workflow file for deployment.
+Fork the repository and setup your self hosted runner. You can then use the GitHub workflow file for deployment. Use this curl command to setup the runner using the newly installed agent:
+```
+curl https://management-api.YOUR_HOSTNAME/runner \
+  --request POST \
+  -H "X-Api-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  --data '{"token": "YOUR_GH_TOKEN", "path": "/home/node_agent/deployment_manager", "git_url": "https://github.com/YOUR_GH_NAME/deployment_manager"}'
+```
 
 3. Create yourself a user account:
 Connect to a docker container shell, open a rails shell and create a user account.
