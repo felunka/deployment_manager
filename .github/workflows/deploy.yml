@@ -23,4 +23,4 @@ jobs:
           RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
           POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_HOSTNAME=ubpvzvyfxe
-          /usr/local/bin/docker-compose --file docker-compose.yml --project-name deployment_manager up -d --remove-orphans --build
+          docker compose --file docker-compose.yml --project-name deployment_manager up -d --remove-orphans --build
