@@ -18,13 +18,7 @@ class ApplicationController < ActionController::Base
 
   def require_login
     unless current_user
-      redirect_to root_path
-    end
-  end
-
-  def require_admin
-    if current_user.nil? || !current_user.admin?
-      redirect_to root_path
+      redirect_to new_session_path
     end
   end
 
