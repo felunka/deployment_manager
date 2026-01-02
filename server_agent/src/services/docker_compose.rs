@@ -24,7 +24,7 @@ pub async fn create_or_update_compose(
         Ok(v) => v,
         Err(_) => {
             let res = Response::builder()
-                .status(hyper::StatusCode::INTERNAL_SERVER_ERROR)
+                .status(hyper::StatusCode::BAD_REQUEST)
                 .body(Full::new(Bytes::from(
                     "{\"error\": \"Cant read request body\"}",
                 )))
@@ -39,7 +39,7 @@ pub async fn create_or_update_compose(
         Ok(v) => v,
         Err(_) => {
             let res = Response::builder()
-                .status(hyper::StatusCode::INTERNAL_SERVER_ERROR)
+                .status(hyper::StatusCode::BAD_REQUEST)
                 .body(Full::new(Bytes::from(
                     "{\"error\": \"Cant read request body\"}",
                 )))
@@ -61,7 +61,7 @@ pub async fn create_or_update_compose(
     }
 
     // Update compose file content
-    match fs::write(format!("{}/docker-compose.sh", &setup.path), setup.compose) {
+    match fs::write(format!("{}/docker-compose.yml", &setup.path), setup.compose) {
         Ok(v) => v,
         Err(_) => {
             let res = Response::builder()

@@ -25,7 +25,7 @@ pub async fn setup_new(
         Ok(v) => v,
         Err(_) => {
             let res = Response::builder()
-                .status(hyper::StatusCode::INTERNAL_SERVER_ERROR)
+                .status(hyper::StatusCode::BAD_REQUEST)
                 .body(Full::new(Bytes::from(
                     "{\"error\": \"Cant read request body\"}",
                 )))
@@ -40,7 +40,7 @@ pub async fn setup_new(
         Ok(v) => v,
         Err(_) => {
             let res = Response::builder()
-                .status(hyper::StatusCode::INTERNAL_SERVER_ERROR)
+                .status(hyper::StatusCode::BAD_REQUEST)
                 .body(Full::new(Bytes::from(
                     "{\"error\": \"Cant read request body\"}",
                 )))
