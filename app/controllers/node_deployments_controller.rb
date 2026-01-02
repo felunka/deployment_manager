@@ -83,6 +83,12 @@ class NodeDeploymentsController < ApplicationController
     end
   end
 
+  def destroy
+    NodeDeployment.find_by(params.permit(:id)).destroy
+    flash[:danger] = t("messages.model.deleted")
+    redirect_to action: "index"
+  end
+
   private
 
   def permit(params)
