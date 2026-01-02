@@ -117,6 +117,8 @@ class NodeDeploymentsController < ApplicationController
             node_deployment.update deployment_status: :init_failed
           end
         end
+      else
+        node_deployment.update deployment_status: :healthy
       end
 
     else
