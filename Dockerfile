@@ -16,7 +16,7 @@ WORKDIR /rails
 
 # Install base packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 && \
+    apt-get install --no-install-recommends -y curl libjemalloc2 libvips postgresql-client && \
     ln -s /usr/lib/$(uname -m)-linux-gnu/libjemalloc.so.2 /usr/local/lib/libjemalloc.so && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
@@ -44,7 +44,7 @@ RUN bundle install && \
     bundle exec bootsnap precompile -j 1 --gemfile
 
 # Copy application code
-COPY . .
+COPY --exclude=server_agent/* . .
 
 # Precompile bootsnap code for faster boot times.
 # -j 1 disable parallel compilation to avoid a QEMU bug: https://github.com/rails/bootsnap/issues/495

@@ -18,6 +18,19 @@ test:
   database: deployment_manager_test
 
 production:
-  <<: *default
-  host: <%= ENV['POSTGRES_HOSTNAME'] %>
-  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  primary:
+    <<: *default
+    host: <%= ENV['POSTGRES_HOSTNAME'] %>
+    password: <%= ENV['POSTGRES_PASSWORD'] %>
+  cable:
+    <<: *default
+    host: <%= ENV['POSTGRES_HOSTNAME'] %>
+    password: <%= ENV['POSTGRES_PASSWORD'] %>
+  queue:
+    <<: *default
+    host: <%= ENV['POSTGRES_HOSTNAME'] %>
+    password: <%= ENV['POSTGRES_PASSWORD'] %>
+  cache:
+    <<: *default
+    host: <%= ENV['POSTGRES_HOSTNAME'] %>
+    password: <%= ENV['POSTGRES_PASSWORD'] %>
