@@ -13,7 +13,6 @@ class ApplicationGrid < Datagrid::Base
   end
 
   def self.actions(available_actions: [ :show, :edit, :destroy ], button_options: {})
-    debugger
     column(:actions, html: true, header: "") do |asset|
       content_tag(:div, class: "d-flex model-buttons") do
         if available_actions.include? :show
