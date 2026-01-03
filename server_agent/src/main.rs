@@ -20,7 +20,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     };
     let key_file_path = match env::args().nth(2) {
         Some(file_path) => file_path,
-        None => "/home/felunka/deployment_manager/server_agent/.key.hash".to_string(),
+        None => "/home/node_agent/.key.hash".to_string(),
     };
     let key_hash = match fs::read_to_string(key_file_path) {
         Ok(key_hash) => key_hash,
