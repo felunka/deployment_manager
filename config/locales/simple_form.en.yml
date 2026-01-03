@@ -20,7 +20,7 @@ en:
           decommissioned: Decommissioned
         deployment_type:
           simple_docker_run: Simple docker run
-          simple_docker_compose: Simple docker compose (paste compose below)
+          simple_docker_compose: Simple docker compose
           github_action_runner: GitHub actions runner
         deployment_status:
           pending_init: Pending initialization
