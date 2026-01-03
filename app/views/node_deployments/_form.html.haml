@@ -13,7 +13,7 @@
       = f.input :path
       = f.input :git_url, as: :url
       = f.input :deployment_type, collection: NodeDeployment.deployment_types.symbolize_keys.keys, include_blank: false, include_hidden: false
-      = f.input :compose, as: :text, input_html: { value: "" }
+      = f.input :compose, as: :text
       - unless @node_deployment.id.present?
         = f.input :github_token, input_html: { value: "" }
         = f.input :adopt, as: :boolean, input_html: { checked: false }
