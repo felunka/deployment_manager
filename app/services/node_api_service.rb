@@ -28,6 +28,15 @@ class NodeApiService
     get("docker/container/#{id}/#{action}")
   end
 
+  def container_create(node_deployment)
+    body = {
+      container_name: node_deployment.name,
+      container_config: JSON.parse(node_deployment.compose)
+    }
+
+    post("docker/container", body)
+  end
+
   # Compose
   def setup_compose(node_deployment)
     body = {

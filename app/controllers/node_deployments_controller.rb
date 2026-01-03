@@ -22,7 +22,7 @@ class NodeDeploymentsController < ApplicationController
 
     n_api = NodeApiService.new(@node_deployment.node)
     if @node_deployment.simple_docker_run?
-      # TODO: implement
+      res = n_api.container_detail(params[:id], "logs")
     elsif @node_deployment.simple_docker_compose?
       res = n_api.compose_logs(@node_deployment)
     elsif @node_deployment.github_action_runner?
@@ -32,7 +32,11 @@ class NodeDeploymentsController < ApplicationController
     if res && res.code == "200"
       @node_deployment.update deployment_status: :healthy
 
-      @status = res.body
+      if @node_deployment.github_action_runner?
+        @status = res.body
+      else
+        @status = JSON.parse(res.body)
+      end
     else
       @node_deployment.update deployment_status: :connection_lost
 
@@ -110,7 +114,7 @@ class NodeDeploymentsController < ApplicationController
 
       unless permitted_params[:adopt] == "1"
         if node_deployment.simple_docker_run?
-          # TODO: implement
+          response = node_api.container_create(node_deployment)
         elsif node_deployment.simple_docker_compose?
           response = node_api.setup_compose(node_deployment)
         elsif node_deployment.github_action_runner?

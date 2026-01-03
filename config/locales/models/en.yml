@@ -22,8 +22,11 @@ en:
         node: Node
         name: Name
         path: Path
+        compose: Docker config or compose YML
         deployment_type: Type
         deployment_status: Status
+        github_token: GitHub token
+        adopt: Adopt existing setup?
       container:
         id: ID
         name: Name

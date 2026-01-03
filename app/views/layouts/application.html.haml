@@ -16,9 +16,10 @@
     %link{href: "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css ", rel: "stylesheet"}/
     = stylesheet_link_tag 'application', 'data-turbo-track': 'reload'
     = javascript_importmap_tags
-    - translation_json = current_translations.to_json.gsub("\\n", "").gsub("'", "").html_safe
-    :javascript
-      window.I18n = JSON.parse('#{translation_json}')
+    - translation_json = current_translations.to_json.gsub("\\n", "").html_safe
+    %script#i18n{:type => "application/json"}
+      = raw translation_json
+      
   %body.bg-dark
     %nav.navbar.navbar-expand-lg.navbar-light.bg-light
       .container-fluid

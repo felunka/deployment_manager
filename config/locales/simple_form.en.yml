@@ -28,6 +28,14 @@ en:
           healthy: Healthy
           connection_lost: Connection to deployment/node lost!
           decommissioned: Decommissioned
+    hints:
+      defaults:
+        compose: >-
+          If you want to create a "Simple docker run", write container config here as JSON.
+          Anything in the docker api is allowed here. See: https://docs.docker.com/reference/api/engine/version/v1.52/#tag/Container/operation/ContainerCreate
+          Note: Keys are capitalized!
+          If you want to create a "Simple docker compose", write the compose file yml to use here.
+        adopt: If the deployment is already running you can skip the setup to adopt it into the app. Make sure the agent has access!
           
     # Examples
     # labels:
