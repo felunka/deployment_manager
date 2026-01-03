@@ -15,7 +15,7 @@ window.process.env = {};
 window.process.env.NODE_ENV = "production";
 
 // Load translations
-window.i18n = JSON.parse(document.getElementById("i18n").textContent);
+window.I18n = JSON.parse(document.getElementById("i18n").textContent);
 
 document.addEventListener("turbo:load", function() {
   BootstrapTooltips.setup();
