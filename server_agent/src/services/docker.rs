@@ -9,6 +9,7 @@ use bollard::query_parameters::ListContainersOptionsBuilder;
 use bollard::query_parameters::LogsOptionsBuilder;
 use bollard::query_parameters::StartContainerOptionsBuilder;
 use bollard::query_parameters::StopContainerOptionsBuilder;
+use bollard::query_parameters::RemoveContainerOptionsBuilder;
 use bollard::Docker;
 
 use serde::Deserialize;
@@ -264,6 +265,39 @@ pub async fn container_stop(id: &str) -> Result<Response<Full<Bytes>>, Infallibl
         Ok(_) => {
             return Ok(Response::new(Full::new(Bytes::from(
                 "{\"ok\": \"Docker container stopped\"}",
+            ))))
+        }
+        Err(_) => {
+            let res = Response::builder()
+                .status(hyper::StatusCode::INTERNAL_SERVER_ERROR)
+                .body(Full::new(Bytes::from(
+                    "{\"error\": \"Docker container stop failed\"}",
+                )))
+                .unwrap();
+            return Ok(res);
+        }
+    };
+}
+
+pub async fn container_rm(id: &str) -> Result<Response<Full<Bytes>>, Infallible> {
+    let options = RemoveContainerOptionsBuilder::default().build();
+    let docker = match Docker::connect_with_defaults() {
+        Ok(v) => v,
+        Err(_) => {
+            let res = Response::builder()
+                .status(hyper::StatusCode::INTERNAL_SERVER_ERROR)
+                .body(Full::new(Bytes::from(
+                    "{\"error\": \"Docker init failed\"}",
+                )))
+                .unwrap();
+            return Ok(res);
+        }
+    };
+
+    match docker.remove_container(&id, Some(options)).await {
+        Ok(_) => {
+            return Ok(Response::new(Full::new(Bytes::from(
+                "{\"ok\": \"Docker container removed\"}",
             ))))
         }
         Err(_) => {

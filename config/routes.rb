@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :container, only: [ :index, :show ] do
       member do
         get :logs
+        get "/action/:action_name", to: "container#action", as: :action
       end
     end
     resources :node_deployments

@@ -67,6 +67,7 @@ pub async fn router(
             "inspect" => services::docker::container_inspect(id).await,
             "start" => services::docker::container_start(id).await,
             "stop" => services::docker::container_stop(id).await,
+            "rm" => services::docker::container_rm(id).await,
             "logs" => services::docker::container_logs(id).await,
             _ => not_found()
         }

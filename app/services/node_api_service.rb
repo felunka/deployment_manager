@@ -62,7 +62,7 @@ class NodeApiService
 
   def get(endpoint)
     uri = URI("#{@node.api_url}/#{endpoint}")
-    http = Net::HTTP.new(uri.host, uri.port)
+    http = Net::HTTP.new(uri.host, @node.port)
     http.use_ssl = (uri.scheme == "https")
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE if Rails.env.development?
 
@@ -70,14 +70,15 @@ class NodeApiService
 
     begin
       http.request(request)
-    rescue
+    rescue Exception => e
+      logger.warn(e)
       false
     end
   end
 
   def post(endpoint, body)
     uri = URI("#{@node.api_url}/#{endpoint}")
-    http = Net::HTTP.new(uri.host, uri.port)
+    http = Net::HTTP.new(uri.host, @node.port)
     http.use_ssl = (uri.scheme == "https")
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE if Rails.env.development?
 

@@ -44,4 +44,24 @@ class ContainerController < ApplicationController
       @container_logs = []
     end
   end
+
+  def action
+    @node = Node.find params[:node_id]
+
+    n_api = NodeApiService.new(@node)
+    res = n_api.container_detail(params[:id], params[:action_name])
+
+    respond_to do |format|
+      if res && res.code == "200"
+        if params[:action_name] == "rm"
+          format.html { redirect_to node_path(@node) }
+        else
+          format.html { redirect_to node_container_path(@node, params[:id]) }
+        end
+      else
+        flash[:danger] = t("messages.container.action.fail")
+        format.html { redirect_to node_container_path(@node, params[:id]) }
+      end
+    end
+  end
 end
