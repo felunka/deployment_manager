@@ -3,7 +3,7 @@
     %h5.card-header.d-flex.justify-content-between.align-items-center
       = t('activerecord.models.node_deployment')
       .d-flex.model-buttons
-        = button_to t('helpers.navigate.back'), node_path(@node_deployment.node), class: 'btn btn-primary', method: :get
+        = button_to t('helpers.navigate.back'), node_path(@node_deployment.node), class: 'btn btn-primary', method: :get, form: { "data-turbo-frame": "_top" }
     .card-body
       %pre.mt-2.vh-80
         %code{data: {controller: 'ansi-color'}}
