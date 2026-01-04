@@ -80,6 +80,10 @@ class NodeDeploymentsController < ApplicationController
 
     respond_to do |format|
       if @node_deployment.update permit(params)
+        # Update deployment data
+        Thread.new do
+          update_deployment(@node_deployment)
+        end
         format.html { redirect_to action: "show", id: @node_deployment.id }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -134,6 +138,38 @@ class NodeDeploymentsController < ApplicationController
 
     else
       logger.warn("Deployment failed! Node not healthy")
+      node_deployment.update deployment_status: :init_failed
+    end
+  end
+
+  def update_deployment(node_deployment)
+    node_api = NodeApiService.new(node_deployment.node)
+    # Test if node healthy
+    response = node_api.health()
+    if response && response.code == "200"
+
+      unless permitted_params[:adopt] == "1"
+        if node_deployment.simple_docker_run?
+          response = node_api.container_create(node_deployment)
+        elsif node_deployment.simple_docker_compose?
+          response = node_api.setup_compose(node_deployment)
+        elsif node_deployment.github_action_runner?
+          return
+        end
+        if response && response.code == "200"
+          logger.info(response.body)
+          node_deployment.update deployment_status: :healthy
+        else
+          logger.warn("Deployment update failed!")
+          logger.warn(response.body)
+          node_deployment.update deployment_status: :init_failed
+        end
+      else
+        node_deployment.update deployment_status: :healthy
+      end
+
+    else
+      logger.warn("Deployment update failed! Node not healthy")
       node_deployment.update deployment_status: :init_failed
     end
   end
