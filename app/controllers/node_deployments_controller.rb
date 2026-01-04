@@ -148,24 +148,20 @@ class NodeDeploymentsController < ApplicationController
     response = node_api.health()
     if response && response.code == "200"
 
-      unless permitted_params[:adopt] == "1"
-        if node_deployment.simple_docker_run?
-          response = node_api.container_create(node_deployment)
-        elsif node_deployment.simple_docker_compose?
-          response = node_api.setup_compose(node_deployment)
-        elsif node_deployment.github_action_runner?
-          return
-        end
-        if response && response.code == "200"
-          logger.info(response.body)
-          node_deployment.update deployment_status: :healthy
-        else
-          logger.warn("Deployment update failed!")
-          logger.warn(response.body)
-          node_deployment.update deployment_status: :init_failed
-        end
-      else
+      if node_deployment.simple_docker_run?
+        response = node_api.container_create(node_deployment)
+      elsif node_deployment.simple_docker_compose?
+        response = node_api.setup_compose(node_deployment)
+      elsif node_deployment.github_action_runner?
+        return
+      end
+      if response && response.code == "200"
+        logger.info(response.body)
         node_deployment.update deployment_status: :healthy
+      else
+        logger.warn("Deployment update failed!")
+        logger.warn(response.body)
+        node_deployment.update deployment_status: :init_failed
       end
 
     else
